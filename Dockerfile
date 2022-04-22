@@ -3,9 +3,7 @@ FROM alpine
 RUN apk update \
     && apk add samba tzdata
 
-RUN mkdir -p /main && \
-    chmod -R 777 /main && \
-    chown -R nobody:nobody /main
+RUN mkdir -p /share
 
 ARG SMB_USER
 ARG SMB_PASSWORD
@@ -22,8 +20,8 @@ RUN { \
     echo "  log file = /var/log/samba/%I.log"; \
     echo "  max log size = 4096"; \
     echo ""; \
-    echo "[main]"; \
-    echo "  path = /main"; \
+    echo "[share]"; \
+    echo "  path = /share"; \
     echo "  valid users = ${SMB_USER}"; \
     echo "  guest ok = no"; \
     echo "  browsable = yes"; \
